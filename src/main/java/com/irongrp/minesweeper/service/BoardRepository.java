@@ -9,5 +9,5 @@ public interface BoardRepository {
 
     void add(Board board);
     List<Board> getBoards();
-    Board getBoard(Long id);
+    Board getBoard(Integer id);
 }

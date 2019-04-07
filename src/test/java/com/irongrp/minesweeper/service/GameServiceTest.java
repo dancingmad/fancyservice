@@ -39,7 +39,7 @@ public class GameServiceTest {
     @Test
     public void updateBoard() throws Exception {
         Board testBoard = new Board(5);
-        Long gameId = testBoard.getGameId();
+        Integer gameId = testBoard.getGameId();
         when(boardRepository.getBoard(gameId)).thenReturn(testBoard);
         MineField[][] mines = testBoard.getMines();
         clearBoard(mines);
@@ -60,8 +60,8 @@ public class GameServiceTest {
     @Test
     public void getBoard() throws Exception {
         Board mockBoard = mock(Board.class);
-        when(boardRepository.getBoard(123L)).thenReturn(mockBoard);
-        Board result = gameService.getBoard(123L);
+        when(boardRepository.getBoard(123)).thenReturn(mockBoard);
+        Board result = gameService.getBoard(123);
         assertEquals(mockBoard,result);
     }
 

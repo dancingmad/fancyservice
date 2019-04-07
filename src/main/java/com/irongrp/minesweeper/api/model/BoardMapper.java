@@ -11,8 +11,9 @@ public class BoardMapper {
     public BoardDTO map(Board board) {
         BoardDTO boardDTO = new BoardDTO();
         boardDTO.setGameId(board.getGameId());
-        boardDTO.setFields(map(board.getMines()));
         boardDTO.setStatus(getStatus(board));
+        boardDTO.setFields(map(board.getMines()));
+        boardDTO.setSize(board.getMines().length);
         return boardDTO;
     }
 
@@ -28,10 +29,10 @@ public class BoardMapper {
 
     private BoardField map(MineField mineField) {
         BoardField field = new BoardField();
-        field.setKill(mineField.isRevealed()&&mineField.isMine());
+        field.setMineCount(mineField.isShowCount() && !mineField.isMine() ? mineField.getMineCount():-1);
+        field.setKill(mineField.isRevealed() && mineField.isMine());
         field.setRevealed(mineField.isRevealed());
         field.setMarked(mineField.isMarked());
-        field.setMineCount(mineField.isShowCount()?mineField.getMineCount():-1);
         return field;
     }
 
@@ -42,10 +43,15 @@ public class BoardMapper {
                 if (mine.isRevealed() && mine.isMine()) {
                     return BoardDTO.Status.END_LOSE;
                 }
-                if (!mine.isRevealed() && !mine.isMine()) {
+                if (!mine.isShowCount() && !mine.isMine()) {
                     return BoardDTO.Status.PLAY;
                 }
              }
+        }
+        for(MineField[] mines : mineFields) {
+            for(MineField mine : mines) {
+                mine.setRevealed(true);
+            }
         }
         return BoardDTO.Status.END_WIN;
     }

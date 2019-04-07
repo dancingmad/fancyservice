@@ -8,14 +8,14 @@ public class BoardDTO {
 
     private Status status;
     private BoardField[][] fields;
-    private long gameId;
+    private Integer gameId;
     private int size;
 
-    public long getGameId() {
+    public Integer getGameId() {
         return gameId;
     }
 
-    public void setGameId(long gameId) {
+    public void setGameId(Integer gameId) {
         this.gameId = gameId;
     }
 
@@ -33,7 +33,10 @@ public class BoardDTO {
 
     public void setFields(BoardField[][] fields) {
         this.fields = fields;
-        this.size = fields.length;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
     }
 
     public int getSize() {

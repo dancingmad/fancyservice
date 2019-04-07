@@ -10,7 +10,7 @@ public class Board {
     public static int MIN_SIZE = 5;
     public static int MAX_SIZE = 50;
 
-    private Long gameId;
+    private Integer gameId;
     private MineField[][] mines;
     private int size;
 
@@ -18,14 +18,14 @@ public class Board {
 
     public Board(int size) {
         this.size = size;
-        this.gameId = Math.abs(new Random(1).nextLong());
+        this.gameId = Math.abs(random.nextInt());
         if (size < MIN_SIZE || size > MAX_SIZE) {
             throw new GeneralException("Invalid Size");
         }
         createBoard();
     }
 
-    public Long getGameId() {
+    public Integer getGameId() {
         return this.gameId;
     }
 
@@ -51,7 +51,11 @@ public class Board {
     private void updateMineCounters() {
         for(int i=0;i<size;i++) {
             for(int j=0;j<size;j++) {
-                mines[i][j].setMineCount(calculateNeighborMineCount(i,j));
+                if (mines[i][j].isMine()) {
+                    mines[i][j].setMineCount(99);
+                } else {
+                    mines[i][j].setMineCount(calculateNeighborMineCount(i, j));
+                }
             }
         }
     }

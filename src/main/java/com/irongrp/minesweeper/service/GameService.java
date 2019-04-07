@@ -21,7 +21,7 @@ public class GameService {
         return board;
     }
 
-    public Board updateBoard(Long gameId,
+    public Board updateBoard(Integer gameId,
                              boolean[][] revealed,
                              boolean[][] marked) {
         // here we match the revealed with the saved board
@@ -52,6 +52,7 @@ public class GameService {
             for (int i = 0; i < mines.length; i++) {
                 for (int j = 0; j < mines.length; j++) {
                     if (mines[i][j].isRevealed()) {
+                        mines[i][j].setShowCount(true);
                         revealedNewField = revealedNewField || processNeighbor(mines, i - 1, j);
                         revealedNewField = revealedNewField || processNeighbor(mines, i + 1, j);
                         revealedNewField = revealedNewField || processNeighbor(mines, i, j - 1);
@@ -70,7 +71,7 @@ public class GameService {
             return false;
         }
         MineField mine = mines[i][j];
-        if (mine.getMineCount() == 0 && !mine.isRevealed()) {
+        if (mine.getMineCount() == 0 && !mine.isRevealed() && !mine.isMine()) {
             mine.setRevealed(true);
             return true;
         }
@@ -79,7 +80,7 @@ public class GameService {
     }
 
 
-    public Board getBoard(Long id) {
+    public Board getBoard(Integer id) {
         return boardRepository.getBoard(id);
     }
 

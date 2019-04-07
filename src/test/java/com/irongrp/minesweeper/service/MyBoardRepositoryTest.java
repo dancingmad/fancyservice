@@ -31,9 +31,9 @@ public class MyBoardRepositoryTest {
     public void getBoard() throws Exception {
         MyBoardRepository repo = new MyBoardRepository();
         Board board = Mockito.mock(Board.class);
-        Mockito.when(board.getGameId()).thenReturn(111L);
+        Mockito.when(board.getGameId()).thenReturn(111);
         repo.add(board);
-        Board result = repo.getBoard(111L);
+        Board result = repo.getBoard(111);
         assertEquals(board,result);
 
     }

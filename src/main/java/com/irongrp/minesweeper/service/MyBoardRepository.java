@@ -11,7 +11,7 @@ import java.util.Map;
 @Component
 public class MyBoardRepository implements BoardRepository{
 
-    private Map<Long,Board> games = new HashMap<>();
+    private Map<Integer,Board> games = new HashMap<>();
 
     public void add(Board board) {
         games.put(board.getGameId(),board);
@@ -21,7 +21,7 @@ public class MyBoardRepository implements BoardRepository{
         return new ArrayList<>(games.values());
     }
 
-    public Board getBoard(Long id) {
+    public Board getBoard(Integer id) {
         return games.get(id);
     }
 

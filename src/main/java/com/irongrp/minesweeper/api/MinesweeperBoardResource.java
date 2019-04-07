@@ -4,16 +4,14 @@ import com.irongrp.minesweeper.api.model.BoardDTO;
 import com.irongrp.minesweeper.api.model.BoardMapper;
 import com.irongrp.minesweeper.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/api/minesweeper")
+@CrossOrigin
 public class MinesweeperBoardResource {
 
     @Autowired
@@ -23,19 +21,19 @@ public class MinesweeperBoardResource {
     private BoardMapper boardMapper;
 
     @RequestMapping(value = "/",method = RequestMethod.POST)
-    public BoardDTO createGame(BoardDTO board) {
+    public BoardDTO createGame(@RequestBody BoardDTO board) {
         return boardMapper.map(gameService.startGame(board.getSize()));
     }
 
     @RequestMapping(value = "/", method = RequestMethod.PUT)
-    public BoardDTO updateGame(BoardDTO board) {
+    public BoardDTO updateGame(@RequestBody BoardDTO board) {
         return boardMapper.map(gameService.updateBoard(board.getGameId(),
                 getRevealed(board),
                 getMarked(board)));
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public BoardDTO getBoard(@PathVariable Long id) {
+    public BoardDTO getBoard(@PathVariable Integer id) {
         return boardMapper.map(gameService.getBoard(id));
     }
 
